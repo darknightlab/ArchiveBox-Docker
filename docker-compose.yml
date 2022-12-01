@@ -1,0 +1,6 @@
+version: "3"
+
+services:
+    archivebox:
+        build: .
+        image: ${DOCKER_IMAGE:-archivebox/archivebox:canoziia-build}
