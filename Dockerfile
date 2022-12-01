@@ -2,7 +2,7 @@ FROM archivebox/archivebox:latest
 
 # Install Node dependencies
 WORKDIR "$NODE_DIR"
-RUN rm -rf !\(package.json\)
+RUN mv package.json / && rm -rf * && mv /package.json ./
 ENV PATH="${PATH}:$NODE_DIR/node_modules/.bin" \
     npm_config_loglevel=error
 # ADD ./package.json ./package.json
