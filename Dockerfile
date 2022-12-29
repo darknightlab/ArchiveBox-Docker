@@ -3,8 +3,8 @@ FROM archivebox/archivebox:latest
 # Install Node dependencies
 WORKDIR "$NODE_DIR"
 RUN mv package.json / && rm -rf * && mv /package.json ./
-ENV PATH="${PATH}:$NODE_DIR/node_modules/.bin" \
-    npm_config_loglevel=error
+# ENV PATH="${PATH}:$NODE_DIR/node_modules/.bin" \
+#     npm_config_loglevel=error
 # ADD ./package.json ./package.json
 # ADD ./package-lock.json ./package-lock.json
 RUN npm i
@@ -12,8 +12,9 @@ RUN npm i
 # Install ArchiveBox Python package and its dependencies
 WORKDIR "$CODE_DIR"
 # ADD . "$CODE_DIR"
-RUN sed -i '/DEPENDENCIES\[/a\        "--load-deferred-images-dispatch-scroll-event=true",' "$CODE_DIR/archivebox/extractors/singlefile.py"
-RUN pip install -e .
+RUN sed -i '/DEPENDENCIES\[/a\        "--load-deferred-images-dispatch-scroll-event=true",' "$CODE_DIR/archivebox/extractors/singlefile.py" && \
+    pip install -e . && \
+    pip install --upgrade youtube-dl yt-dlp
 
 # Setup ArchiveBox runtime config
 WORKDIR "$DATA_DIR"
